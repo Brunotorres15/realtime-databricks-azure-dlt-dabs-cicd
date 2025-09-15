@@ -21,21 +21,21 @@ silver_schema = "silver"
 def patients():
     return (
         dlt.read_stream(f"{catalog}.{bronze_schema}.patients")
-        # Converte as colunas de string para timestamp
+        # Converting the columns to timestamp
         .withColumn("admission_time_ts", to_timestamp("admission_time"))
         .withColumn("discharge_time_ts", to_timestamp("discharge_time"))
-        # Coloca timestamp de processamento
+        # Adding timestamp processing time
         .withColumn("silver_processing_time", current_timestamp())
-        # Calcula duração da internação em horas
+        # Calculate hospitalization duration in hours
         .withColumn(
             "length_of_stay_hours",
             round((unix_timestamp("discharge_time_ts") - unix_timestamp("admission_time_ts")) / 3600, 2)
         )
-        # Extrai atributos temporais
+        # Extract temporal attributes
         .withColumn("admission_hour", hour("admission_time_ts"))
         .withColumn("admission_day_of_week", dayofweek("admission_time_ts"))
         .withColumn("admission_month", month("admission_time_ts"))
-        # Categoriza internação
+        # Categorize hospitalization
         .withColumn(
             "stay_category",
             when(col("length_of_stay_hours") < 24, "Short Stay")
