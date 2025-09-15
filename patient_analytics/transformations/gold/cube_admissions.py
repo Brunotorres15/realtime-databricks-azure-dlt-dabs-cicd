@@ -16,7 +16,7 @@ def cube_admissions_gender_department():
         )
     )
 
-# --- Cubo por departamento e hospital ---
+# --- Cube by department and hospital ---
 @dlt.table(
     name="dev.gold.cube_admissions_department_hospital",
     comment="Cubos de analytics: número de admissões e média de duração por departamento e hospital",
