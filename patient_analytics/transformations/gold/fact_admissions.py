@@ -7,6 +7,11 @@ from pyspark.sql.functions import *
         "quality": "gold"
     }
 )
+@dlt.expect_all({
+    "valid_patient_fk": "patient_sk IS NOT NULL",
+    "valid_department_fk": "department_sk IS NOT NULL",
+    "non_negative_stay": "length_of_stay_hours >= 0"
+    })
 def fact_admissions():
 
     incoming_data = (
