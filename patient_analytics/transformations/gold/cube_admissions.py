@@ -3,7 +3,7 @@ from pyspark.sql.functions import col, count, avg, round
 
 @dlt.table(
     name="dev.gold.cube_admissions_gender_department",
-    comment="Cubos de analytics: número de admissões e média de duração por gênero e departamento",
+    comment="# Analytics cubes: number of admissions and average length of stay by gender and department",
     table_properties={"quality": "gold"}
 )
 def cube_admissions_gender_department():
@@ -19,7 +19,7 @@ def cube_admissions_gender_department():
 # --- Cube by department and hospital ---
 @dlt.table(
     name="dev.gold.cube_admissions_department_hospital",
-    comment="Cubos de analytics: número de admissões e média de duração por departamento e hospital",
+    comment="# Analytics cubes: number of admissions and average length of stay by department and hospital",
     table_properties={"quality": "gold"}
 )
 def cube_admissions_department_hospital():
