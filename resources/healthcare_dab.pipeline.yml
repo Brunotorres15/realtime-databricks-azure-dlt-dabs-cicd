@@ -1,0 +1,14 @@
+# The main pipeline for healthcare_dab
+resources:
+  pipelines:
+    healthcare_dab_pipeline:
+      name: healthcare_dab_pipeline
+      ## Specify the 'catalog' field to configure this pipeline to make use of Unity Catalog:
+      # catalog: catalog_name
+      schema: healthcare_dab_${bundle.target}
+      libraries:
+        - notebook:
+            path: ../src/pipeline.ipynb
+
+      configuration:
+        bundle.sourcePath: ${workspace.file_path}/src
