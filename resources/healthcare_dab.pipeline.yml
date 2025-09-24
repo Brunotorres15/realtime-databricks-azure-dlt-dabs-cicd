@@ -1,14 +1,14 @@
-# The main pipeline for healthcare_dab
 resources:
   pipelines:
-    healthcare_dab_pipeline:
-      name: healthcare_dab_pipeline
-      ## Specify the 'catalog' field to configure this pipeline to make use of Unity Catalog:
-      # catalog: catalog_name
-      schema: healthcare_dab_${bundle.target}
+    pipeline_patient_analytics:
+      name: patient_analytics
+      clusters:
+        - label: default
+          node_type_id: Standard_D4s_v3
+          num_workers: 1
       libraries:
-        - notebook:
-            path: ../src/pipeline.ipynb
-
-      configuration:
-        bundle.sourcePath: ${workspace.file_path}/src
+        - glob:
+            include: ../src/patient_analytics/transformations/**
+      schema: bronze
+      catalog: dev
+      root_path: ../src/patient_analytics

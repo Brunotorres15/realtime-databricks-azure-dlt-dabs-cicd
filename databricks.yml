@@ -4,10 +4,10 @@ bundle:
   name: healthcare_dab
   uuid: 54d6a0ad-cfe3-4ac1-a74f-dca3b5477a93
 
-artifacts:
-  python_artifact:
-    type: whl
-    build: uv build --wheel
+# artifacts:
+#   python_artifact:
+#     type: whl
+#     build: uv build --wheel
 
 include:
   - resources/*.yml
