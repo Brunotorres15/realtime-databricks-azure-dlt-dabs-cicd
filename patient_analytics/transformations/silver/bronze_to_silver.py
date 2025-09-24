@@ -1,5 +1,6 @@
 import dlt
 from pyspark.sql.functions import col, when, current_timestamp, unix_timestamp, round, hour, dayofweek, month, to_timestamp
+from utilities import add_time_columns, enrich_with_temporal_attrs
 
 catalog = "dev"
 bronze_schema = "bronze"
@@ -19,27 +20,9 @@ silver_schema = "silver"
     "valid_discharge_time": "discharge_time > admission_time"
 })
 def patients():
-    return (
-        dlt.read_stream(f"{catalog}.{bronze_schema}.patients")
-        # Converting the columns to timestamp
-        .withColumn("admission_time_ts", to_timestamp("admission_time"))
-        .withColumn("discharge_time_ts", to_timestamp("discharge_time"))
-        # Adding timestamp processing time
-        .withColumn("silver_processing_time", current_timestamp())
-        # Calculate hospitalization duration in hours
-        .withColumn(
-            "length_of_stay_hours",
-            round((unix_timestamp("discharge_time_ts") - unix_timestamp("admission_time_ts")) / 3600, 2)
-        )
-        # Extract temporal attributes
-        .withColumn("admission_hour", hour("admission_time_ts"))
-        .withColumn("admission_day_of_week", dayofweek("admission_time_ts"))
-        .withColumn("admission_month", month("admission_time_ts"))
-        # Categorize hospitalization
-        .withColumn(
-            "stay_category",
-            when(col("length_of_stay_hours") < 24, "Short Stay")
-            .when(col("length_of_stay_hours") < 72, "Medium Stay")
-            .otherwise("Long Stay")
-        )
-    )
+    df = dlt.read_stream(f"{catalog}.{bronze_schema}.patients")
+    df = add_time_columns.add_time_columns(df, "admission_time", "discharge_time")
+    df = enrich_with_temporal_attrs.enrich_with_temporal_attrs(df, "admission_time_ts")
+    return df
+
+
