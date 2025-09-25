@@ -4,10 +4,10 @@ from pyspark.sql.types import StructType, StructField, StringType, IntegerType, 
 
 
 landing_path = dbutils.secrets.get(scope = "healthcare-analytics", key = "adls-landing-path")
-
+catalog = dbutils.widgets.get("catalog")
 
 @dlt.table(
-    name="dev.bronze.patients",
+    name=f"{catalog}.bronze.patients",
     table_properties = {
         "quality": "bronze"
     }

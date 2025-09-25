@@ -1,14 +1,16 @@
 import dlt
 from pyspark.sql.functions import col, count, avg, round
 
+catalog = dbutils.widgets.get("catalog")
+
 @dlt.table(
-    name="dev.gold.cube_admissions_gender_department",
+    name=f"{catalog}.gold.cube_admissions_gender_department",
     comment="# Analytics cubes: number of admissions and average length of stay by gender and department",
     table_properties={"quality": "gold"}
 )
 def cube_admissions_gender_department():
     return (
-        dlt.read_stream("dev.silver.patients")
+        dlt.read_stream(f"{catalog}.silver.patients")
         .groupBy("gender", "department")
         .agg(
             count("patient_id").alias("num_admissions"),
@@ -18,13 +20,13 @@ def cube_admissions_gender_department():
 
 # --- Cube by department and hospital ---
 @dlt.table(
-    name="dev.gold.cube_admissions_department_hospital",
+    name=f"{catalog}.gold.cube_admissions_department_hospital",
     comment="# Analytics cubes: number of admissions and average length of stay by department and hospital",
     table_properties={"quality": "gold"}
 )
 def cube_admissions_department_hospital():
     return (
-        dlt.read_stream("dev.silver.patients")
+        dlt.read_stream(f"{catalog}.silver.patients")
         .groupBy("department", "hospital_id")
         .agg(
             count("patient_id").alias("num_admissions"),

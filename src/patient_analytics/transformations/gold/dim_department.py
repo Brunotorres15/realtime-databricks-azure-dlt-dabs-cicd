@@ -1,8 +1,10 @@
 import dlt
 from pyspark.sql.functions import concat, sha2, concat_ws, substring, conv, col
 
+catalog = dbutils.widgets.get("catalog")
+
 dlt.create_streaming_table(
-    name = "dev.gold.dim_department",
+    name = f"{catalog}.gold.dim_department",
      table_properties={
         "quality": "gold"
     }
@@ -19,7 +21,7 @@ dlt.create_streaming_table(
 )
 def deduplicated_department():
     sk_expr = conv(substring(sha2(concat_ws("||", col("department"), col("hospital_id").cast("string")), 256), 1, 15), 16, 10).cast("long")
-    dep = (dlt.read_stream("dev.silver.patients")
+    dep = (dlt.read_stream(f"{catalog}.silver.patients")
            .select('department','hospital_id', 'silver_processing_time')
            .drop_duplicates(['department','hospital_id'])
            )
@@ -30,7 +32,7 @@ def deduplicated_department():
         sk_expr)
 
 dlt.create_auto_cdc_flow(
-  target = "dev.gold.dim_department",
+  target = f"{catalog}.gold.dim_department",
   source = "department_view",
   keys = ["department", "hospital_id"],
   sequence_by = "silver_processing_time",
@@ -42,7 +44,7 @@ dlt.create_auto_cdc_flow(
   stored_as_scd_type = 1,
   track_history_column_list = None,
   track_history_except_column_list = None,
-  name = "dim_derparment_cdc",
+  name = "dim_department_cdc",
   once = False
 )
 
