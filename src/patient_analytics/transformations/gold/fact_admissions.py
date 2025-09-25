@@ -1,8 +1,10 @@
 import dlt
 from pyspark.sql.functions import *
 
+catalog = dbutils.widgets.get("catalog")
+
 @dlt.table(
-    name = "dev.gold.fact_admissions",
+    name = f"{catalog}.gold.fact_admissions",
     table_properties = {
         "quality": "gold"
     }
@@ -15,11 +17,11 @@ from pyspark.sql.functions import *
 def fact_admissions():
 
     incoming_data = (
-    dlt.readStream('dev.silver.patients').select('patient_id','admission_time', 'discharge_time', 'bed_id', 'department', 'hospital_id', 'length_of_stay_hours', 'admission_hour', 'admission_day_of_week', 'admission_month', 'stay_category', 'silver_processing_time')
+    dlt.readStream(f"{catalog}.silver.patients").select('patient_id','admission_time', 'discharge_time', 'bed_id', 'department', 'hospital_id', 'length_of_stay_hours', 'admission_hour', 'admission_day_of_week', 'admission_month', 'stay_category', 'silver_processing_time')
 )
 
-    department = dlt.read("dev.gold.dim_department")
-    patient = dlt.read("dev.gold.dim_patient")
+    department = dlt.read(f"{catalog}.gold.dim_department")
+    patient = dlt.read(f"{catalog}.gold.dim_patient")
 
     admissions = (
         incoming_data

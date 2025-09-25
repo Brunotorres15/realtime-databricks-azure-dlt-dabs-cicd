@@ -2,7 +2,7 @@ import dlt
 from pyspark.sql.functions import col, when, current_timestamp, unix_timestamp, round, hour, dayofweek, month, to_timestamp
 from utilities import add_time_columns, enrich_with_temporal_attrs
 
-catalog = "dev"
+catalog = dbutils.widgets.get("catalog")
 bronze_schema = "bronze"
 silver_schema = "silver"
 
