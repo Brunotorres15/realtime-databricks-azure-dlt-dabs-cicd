@@ -12,6 +12,8 @@ bundle:
 variables:
   catalog:
     default: dev
+  flag_dev: 
+    default: true
 
 include:
   - resources/*.yml
