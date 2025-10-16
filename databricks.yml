@@ -12,6 +12,8 @@ bundle:
 variables:
   catalog:
     default: dev
+  flag_dev: 
+    default: true
 
 include:
   - resources/*.yml
@@ -39,6 +41,7 @@ targets:
     mode: production
     variables:
       catalog: test
+      flag_dev: false
     workspace:
       host: https://adb-3612497165240283.3.azuredatabricks.net
       # We explicitly deploy to /Workspace/Users/windows-pk@hotmail.com to make sure we only have a single copy.

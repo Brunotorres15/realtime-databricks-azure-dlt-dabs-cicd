@@ -1,6 +1,8 @@
 resources:
   pipelines:
     pipeline_patient_analytics:
+      configuration:
+        catalog: "${var.catalog}"
       name: patient_analytics
       clusters:
         - label: default
@@ -10,5 +12,5 @@ resources:
         - glob:
             include: ../src/patient_analytics/transformations/**
       schema: bronze
-      catalog: dev
+      #catalog: dev
       root_path: ../src/patient_analytics
