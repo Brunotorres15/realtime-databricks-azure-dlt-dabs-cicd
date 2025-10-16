@@ -12,5 +12,4 @@ resources:
         - glob:
             include: ../src/patient_analytics/transformations/**
       schema: bronze
-      #catalog: dev
       root_path: ../src/patient_analytics

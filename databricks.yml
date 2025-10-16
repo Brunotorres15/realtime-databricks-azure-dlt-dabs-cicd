@@ -44,7 +44,7 @@ targets:
       flag_dev: false
     workspace:
       host: https://adb-3612497165240283.3.azuredatabricks.net
-      # We explicitly deploy to /Workspace/Users/windows-pk@hotmail.com to make sure we only have a single copy.
+
       root_path: /Workspace/Shared/windows-pk@hotmail.com/.bundle/${bundle.name}/${bundle.target}
     permissions:
       - service_principal_name: 6f9b0e1a-060e-4bad-bacd-2f83d0036bbb
