@@ -10,8 +10,8 @@
    2.1 **[Medallion Architecture (Bronze / Silver / Gold)](#medallion-architecture-bronze--silver--gold)**  
    2.2 **[Transformations and Utilities](#transformations-and-utilities)**
 
-3. **[Pipeline and CI/CD](#pipeline-and-cicd)**  
-   3.1 **[Release Workflow (dev / test / prod)](#release-workflow-dev--test--prod)**
+3. **[Pipeline and CI/CD (DevOps flow)](#pipeline-and-cicd-devops-flow)**  
+   3.1 **[Release Workflow (dev / test / prod)](#pipeline-and-cicd-devops-flow)**
 
 4. **[How to Use](#how-to-use)**  
    4.1 **[Dependencies and Installation](#dependencies-and-installation)**  
@@ -51,9 +51,9 @@ End-to-end flow (high level):
 
 See the simplified Kafka → Landing diagram:
 
-![kafka to adls](imgs/kafka to adls.png)
+![kafka to adls](imgs/kafka-to-adls.png)
 
-### Technologies Used
+## Technologies Used
 
 - Databricks DLT (Lakeflow / Declarative Pipelines)
 - PySpark (transformations)
@@ -66,18 +66,18 @@ See the simplified Kafka → Landing diagram:
 
 ### Medallion Architecture (Bronze / Silver / Gold)
 
-As implementações de cada camada estão em `src/patient_analytics/transformations`:
+The implementations for each medallion layer are located in `src/patient_analytics/transformations`:
 
-- Bronze (`bronze/bronze_ingestion.py`): leitura streaming via Auto Loader com `spark.readStream.format("cloudFiles")`. A tabela bronze adiciona `bronze_ingestion_ts` para rastreabilidade.
-- Silver (`silver/bronze_to_silver.py`): aplicação de validações (`@dlt.expect_all`), conversão de timestamps e enriquecimento temporal por meio de utilitários em `src/patient_analytics/utilities`.
-- Gold (`gold/*.py`): construção das dimensões e fato:
-   - `dim_patient` — view deduplicada que gera `patient_sk` (hash) e aplica um fluxo CDC SCD Type 2 via `dlt.create_auto_cdc_flow`.
-   - `dim_department` — dimensão com SCD Type 1.
-   - `fact_admissions` — tabela fato que realiza joins com dimensões e validações adicionais.
+- Bronze (`bronze/bronze_ingestion.py`): streaming ingestion using Auto Loader with `spark.readStream.format("cloudFiles")`. The Bronze table adds `bronze_ingestion_ts` for traceability.
+- Silver (`silver/bronze_to_silver.py`): applies DLT expectations (`@dlt.expect_all`), converts timestamp columns and enriches temporal attributes using utilities in `src/patient_analytics/utilities`.
+- Gold (`gold/*.py`): builds the dimensional tables and the fact table:
+   - `dim_patient` — deduplicated view that generates a `patient_sk` (hash) and wires an automatic CDC flow with SCD Type 2 via `dlt.create_auto_cdc_flow`.
+   - `dim_department` — department dimension using SCD Type 1.
+   - `fact_admissions` — fact table that joins silver data with the dimension tables and applies additional expectations/validations.
 
 Full pipeline diagram:
 
-![pipeline completo](imgs/complete pipeline.png)
+![complete pipeline](imgs/complete-pipeline.png)
 
 
 ### Pipeline and CI/CD (DevOps flow)
@@ -90,7 +90,7 @@ Releases for this project follow a CI/CD pipeline that typically includes:
 
 The diagram below illustrates this CI/CD flow and how releases are promoted across environments:
 
-![cicd](imgs/cicd-workflow.png)
+![cicd workflow](imgs/cicd-workflow.png)
 
 
 ## How to use this project
@@ -123,7 +123,7 @@ pip install -r requirements-pyspark.txt
 pip install -r requirements-dbc.txt
 ```
 
-### Local development and contribution flow
+### Local Development and Tests
 
 1. Make changes locally (edit files under `src/patient_analytics/`).
 2. Run unit tests (`tests/`) locally to validate changes:
@@ -139,7 +139,7 @@ pytest -q
 3. Open a Pull Request. CI will run tests automatically.
 4. After PR approval, the CI/CD pipeline will build the Databricks bundle and deploy it to `dev`. The release process promotes artifacts to `test` and then to `prod` as part of the release pipeline.
 
-### Using the scratch Kafka producer for local E2E testing
+### Using the scratch Kafka producer for E2E testing
 
 If you want to perform an end-to-end test that starts at the event source level, use the simulator in `scratch/realtime-kafka-simulator.py`:
 
@@ -184,9 +184,7 @@ pytest -q
 
 Execution screenshots and test images:
 
-![executions](imgs/executions.png)
-
-![unity tests](imgs/unity tests.png)
+![executions](imgs/unity-tests.png)
 
 ## Contributing
 
@@ -195,6 +193,4 @@ Contributions are welcome. To contribute:
 - Run tests locally with `uv run pytest` before opening PRs.
 - Keep tests updated and add coverage for new functionality.
 
----
-
-The README has been translated to English, the Summary completed, and the environments set to `dev`, `test` and `prod` (no staging). If you'd like, I can also produce an English `README_dev.md` with step-by-step local dev/debug instructions or shorten image alt text/sizes.
+Thanks!
