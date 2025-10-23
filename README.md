@@ -1,24 +1,37 @@
+# Real-Time Patient Flow Processing on Azure and Databricks
+
+![GitHub](https://img.shields.io/badge/GitHub-Repo-black?logo=github&style=flat-square)
+![Azure](https://img.shields.io/badge/Azure-Cloud-blue?logo=microsoft-azure&style=flat-square)
+![Azure Event Hub](https://img.shields.io/badge/Azure%20Event%20Hub-Streaming-0078D4?logo=azure-event-hubs&style=flat-square)
+![Azure Blob Storage](https://img.shields.io/badge/Azure%20Blob%20Storage-Data-blue?logo=microsoft-azure&style=flat-square)
+![Databricks](https://img.shields.io/badge/Databricks-Lakehouse-red?logo=databricks&style=flat-square)
+![Declarative Pipelines](https://img.shields.io/badge/Declarative%20Pipelines-DLT%2FLakeflow-8A2BE2?logo=databricks&style=flat-square)
+![Databricks Asset Bundles](https://img.shields.io/badge/Databricks%20Asset%20Bundles-CI%2FCD-orange?logo=databricks&style=flat-square)
+![PySpark](https://img.shields.io/badge/PySpark-Big%20Data-orange?logo=apache-spark&style=flat-square)
+![pytest](https://img.shields.io/badge/pytest-Testing-yellow?logo=pytest&style=flat-square)
+
+
 ## Summary
 
-1. **[Project Overview](#project-overview)**  
+1. **[📌 Project Overview](#project-overview)**  
    1.1 **[Introduction](#introduction)**  
    1.2 **[Objectives](#objectives)**  
    1.3 **[Flow of the Architecture](#flow-of-the-architecture)**  
    1.4 **[Technologies Used](#technologies-used)**  
 
-2. **[Architecture Explanation](#architecture-explanation)**  
+2. **[📂 Architecture Explanation](#architecture-explanation)**  
    2.1 **[Medallion Architecture (Bronze / Silver / Gold)](#medallion-architecture-bronze--silver--gold)**  
    2.2 **[Transformations and Utilities](#transformations-and-utilities)**
 
-3. **[Pipeline and CI/CD (DevOps flow)](#pipeline-and-cicd-devops-flow)**  
+3. **[⚙️ Pipeline and CI/CD (DevOps flow)](#pipeline-and-cicd-devops-flow)**  
    3.1 **[Release Workflow (dev / test / prod)](#pipeline-and-cicd-devops-flow)**
 
-4. **[How to Use](#how-to-use)**  
+4. **[📐 How to Use](#how-to-use)**  
    4.1 **[Dependencies and Installation](#dependencies-and-installation)**  
    4.2 **[Local Development and Tests](#local-development-and-tests)**  
    4.3 **[Using the scratch Kafka producer for E2E testing](#using-the-scratch-kafka-producer-for-e2e-testing)**
 
-5. **[Testing](#testing)**  
+5. **[🛠️ Testing](#testing)**  
 
 6. **[Contributing](#contributing)**
 
@@ -29,7 +42,7 @@
 
 ### Introduction
 
-`healthcare_dab` is a collection of Databricks Declarative Pipelines (DLT) focused on ingesting and transforming patient event data. The goal is to provide reliable, analysis-ready datasets for analytics, BI and ML with built-in data quality checks and an automated deployment pipeline.
+This project demonstrates a real-time data engineering pipeline for healthcare, designed to process patient flow across hospital departments using Azure cloud services and Databricks.
 
 ### Objectives
 
