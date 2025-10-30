@@ -1,5 +1,3 @@
-# Real-Time Patient Flow Processing on Azure and Databricks
-
 ![GitHub](https://img.shields.io/badge/GitHub-Repo-black?logo=github&style=flat-square)
 ![Azure](https://img.shields.io/badge/Azure-Cloud-blue?logo=microsoft-azure&style=flat-square)
 ![Azure Event Hub](https://img.shields.io/badge/Azure%20Event%20Hub-Streaming-0078D4?logo=azure-event-hubs&style=flat-square)
@@ -9,6 +7,10 @@
 ![Databricks Asset Bundles](https://img.shields.io/badge/Databricks%20Asset%20Bundles-CI%2FCD-orange?logo=databricks&style=flat-square)
 ![PySpark](https://img.shields.io/badge/PySpark-Big%20Data-orange?logo=apache-spark&style=flat-square)
 ![pytest](https://img.shields.io/badge/pytest-Testing-yellow?logo=pytest&style=flat-square)
+
+# Real-Time Patient Flow Processing on Azure and Databricks
+
+![architeture](imgs/complete-architeture.png)
 
 
 ## Summary
