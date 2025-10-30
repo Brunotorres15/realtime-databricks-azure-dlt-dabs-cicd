@@ -2,7 +2,7 @@
 ![Azure](https://img.shields.io/badge/Azure-Cloud-blue?logo=microsoft-azure&style=flat-square)
 ![Azure Event Hub](https://img.shields.io/badge/Azure%20Event%20Hub-Streaming-0078D4?logo=azure-event-hubs&style=flat-square)
 ![Azure Blob Storage](https://img.shields.io/badge/Azure%20Blob%20Storage-Data-blue?logo=microsoft-azure&style=flat-square)
-![Databricks](https://img.shields.io/badge/Databricks-Lakehouse-red?logo=databricks&style=flat-square)
+![Databricks](https://img.shields.io/badge/Databricks-Lakehouse-red?logo=databricks&style=flat-square) 
 ![Declarative Pipelines](https://img.shields.io/badge/Declarative%20Pipelines-DLT%2FLakeflow-8A2BE2?logo=databricks&style=flat-square)
 ![Databricks Asset Bundles](https://img.shields.io/badge/Databricks%20Asset%20Bundles-CI%2FCD-orange?logo=databricks&style=flat-square)
 ![PySpark](https://img.shields.io/badge/PySpark-Big%20Data-orange?logo=apache-spark&style=flat-square)
